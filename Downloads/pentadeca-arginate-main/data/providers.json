@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Clinic Secret",
+    "slug": "clinic-secret",
+    "category": "pentadeca arginate",
+    "rating": 4.9,
+    "reviewCount": 312,
+    "price": "From $149/mo",
+    "priceDetails": "Consultation included. Compounded peptide pricing varies by protocol.",
+    "cta": "https://ExploreTreatments.com/Clinicsecret",
+    "badge": "Top Rated",
+    "features": ["Online consultation", "Home delivery", "No insurance required", "Licensed physicians", "Ongoing support"],
+    "description": "Clinic Secret is a leading telehealth provider specializing in peptide therapies including Pentadeca Arginate (PDA). Their board-certified physicians create personalized protocols tailored to your recovery, inflammation, and healing goals.",
+    "pros": [
+      "Fully online — no in-person visits required",
+      "Dedicated patient support team",
+      "Fast shipping to most US states",
+      "Transparent pricing with no hidden fees",
+      "Compounded by licensed 503A pharmacies"
+    ],
+    "cons": [
+      "Not available in all states",
+      "Subscription-based pricing model",
+      "Insurance not accepted"
+    ],
+    "conditionsTreated": ["Chronic inflammation", "Tissue repair", "Gut health", "Joint pain", "Post-surgical recovery", "Tendon injuries"],
+    "protocols": ["Subcutaneous injection", "Oral/sublingual"],
+    "turnaround": "Ships within 3–5 business days"
+  },
+  {
+    "name": "Defy Medical",
+    "slug": "defy-medical",
+    "category": "pentadeca arginate",
+    "rating": 4.7,
+    "reviewCount": 201,
+    "price": "From $179/mo",
+    "priceDetails": "Lab work and consultation fees may apply.",
+    "cta": "https://ExploreTreatments.com/Clinicsecret",
+    "badge": "Established",
+    "features": ["Lab-based protocols", "Telehealth", "Multiple peptides", "Physician oversight"],
+    "description": "Defy Medical offers comprehensive hormone and peptide therapy programs, including Pentadeca Arginate, with in-depth lab monitoring and physician oversight.",
+    "pros": [
+      "Comprehensive lab work included",
+      "Experienced in peptide optimization",
+      "Multiple treatment protocols available",
+      "Strong patient community"
+    ],
+    "cons": [
+      "Higher upfront costs",
+      "Longer onboarding process",
+      "Less streamlined than newer platforms"
+    ],
+    "conditionsTreated": ["Chronic inflammation", "Hormonal imbalance", "Recovery optimization", "Anti-aging"],
+    "protocols": ["Subcutaneous injection"],
+    "turnaround": "Ships within 5–7 business days"
+  },
+  {
+    "name": "Peptide Sciences",
+    "slug": "peptide-sciences",
+    "category": "pentadeca arginate",
+    "rating": 4.5,
+    "reviewCount": 489,
+    "price": "Research grade",
+    "priceDetails": "For research purposes only. Not for human use.",
+    "cta": "https://ExploreTreatments.com/Clinicsecret",
+    "badge": "Research Grade",
+    "features": ["High purity", "Third-party tested", "Research use", "Bulk available"],
+    "description": "Peptide Sciences supplies high-purity research peptides including Pentadeca Arginate. Products are intended for laboratory and research use only.",
+    "pros": [
+      "High-purity compounds",
+      "Third-party tested",
+      "Competitive pricing",
+      "Fast shipping"
+    ],
+    "cons": [
+      "Research use only",
+      "No medical supervision",
+      "Not for human consumption"
+    ],
+    "conditionsTreated": [],
+    "protocols": ["Research only"],
+    "turnaround": "Ships within 2–3 business days"
+  }
+]
