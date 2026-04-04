@@ -3,10 +3,7 @@ import Stripe from 'stripe'
 import { getSession } from '@/lib/session'
 import type { CreatePaymentIntentRequest, CreatePaymentIntentResponse } from '@/types'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  // Keep in sync with the Stripe API version supported by the installed stripe SDK typings.
-  apiVersion: '2023-10-16',
-})
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: NextRequest) {
   try {
