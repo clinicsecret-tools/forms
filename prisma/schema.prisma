@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Intake submission ────────────────────────────────────────────────────────
+
+model Submission {
+  id               String   @id @default(uuid())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  firstName        String?
+  lastName         String?
+  email            String?
+  phone            String?
+
+  lastStepReached  Int      @default(0)
+  completedAt      DateTime?
+
+  stripeCustomerId String?
+  stripePaymentId  String?
+  amountPaid       Int?
+  orderStatus      String   @default("pending")
+
+  // Affiliate context (non-PHI)
+  utmSource        String?
+  utmMedium        String?
+  utmCampaign      String?
+  utmContent       String?
+  utmTerm          String?
+  affid            String?
+  oid              String?
+  sub1             String?
+  sub2             String?
+  sub3             String?
+  sub4             String?
+  sub5             String?
+  gclid            String?
+  fbclid           String?
+  tbclid           String?
+  transactionId    String?
+  offerId          String?
+  publisherId      String?
+  scRef            String?
+  scVis            String?
+  coupon           String?
+  promo            String?
+  intakeClass      String?
+  trackingUnid     String?
+  resolvedSource   String?
+  selectedProduct  String?
+
+  stepAnswers      StepAnswer[]
+  resumeTokens     ResumeToken[]
+
+  @@index([email])
+  @@index([trackingUnid])
+  @@index([stripeCustomerId])
+}
+
+// ─── Individual step answers ──────────────────────────────────────────────────
+
+model StepAnswer {
+  id           String     @id @default(uuid())
+  submissionId String
+  step         Int
+  answersJson  String
+  submittedAt  DateTime   @default(now())
+
+  submission   Submission @relation(fields: [submissionId], references: [id])
+
+  @@unique([submissionId, step])
+  @@index([submissionId])
+}
+
+// ─── Resume tokens ────────────────────────────────────────────────────────────
+
+model ResumeToken {
+  id                String    @id @default(uuid())
+  token             String    @unique          // the URL token (hex64)
+  submissionId      String
+  lastStep          Int
+  patientEmail      String?
+  patientName       String?
+  affiliateSnapshot String    @default("{}")   // JSON of affiliate params at time of generation
+  tokenType         String    @default("resume") // "resume" | "direct_product"
+  createdAt         DateTime  @default(now())
+  expiresAt         DateTime                   // 7 days from creation
+  usedAt            DateTime?                  // set when token is consumed
+
+  submission        Submission @relation(fields: [submissionId], references: [id])
+
+  @@index([token])
+  @@index([submissionId])
+  @@index([patientEmail])
+  @@index([expiresAt])     // for cleanup jobs
+}

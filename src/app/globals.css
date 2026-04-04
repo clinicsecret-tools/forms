@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+  body { @apply bg-gray-50 text-gray-800 min-h-screen; }
+}
+
+@layer components {
+  .choice-item {
+    @apply flex items-center gap-3 w-full px-5 py-4
+           bg-white border border-gray-200 rounded-xl
+           cursor-pointer select-none transition-all duration-150
+           text-base font-medium text-gray-700;
+  }
+  .choice-item:hover { @apply border-[#11EBF2] shadow-sm; }
+  .choice-item.selected { @apply bg-[#11EBF2] border-[#11EBF2] text-gray-900 font-semibold; }
+
+  .form-input {
+    @apply w-full h-14 px-4 bg-white border border-gray-200 rounded-lg
+           text-gray-800 text-base placeholder-gray-400
+           focus:outline-none focus:ring-2 focus:ring-[#11EBF2] focus:border-[#11EBF2]
+           transition-colors;
+  }
+  .form-input.err { @apply border-red-400 focus:ring-red-300; }
+
+  .form-select {
+    @apply w-full h-14 px-4 bg-white border border-gray-200 rounded-lg
+           text-gray-800 text-base appearance-none cursor-pointer
+           focus:outline-none focus:ring-2 focus:ring-[#11EBF2] focus:border-[#11EBF2]
+           transition-colors;
+  }
+  .form-select.err { @apply border-red-400 focus:ring-red-300; }
+
+  .btn-next {
+    @apply w-full h-12 flex items-center justify-center mt-6
+           bg-[#11EBF2] rounded-full text-gray-900 font-bold text-sm
+           uppercase tracking-wider transition-colors cursor-pointer
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-next:hover:not(:disabled) { @apply bg-[#04dee5]; }
+
+  .field-error { @apply mt-1.5 text-sm text-red-500; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.3s ease both; }
+}
