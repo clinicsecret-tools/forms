@@ -21,7 +21,7 @@ export function generateResumeToken(): string {
 export function buildResumePayload(
   submissionId: string,
   lastStep: number,
-  affiliateParams: Record<string, unknown>,
+  affiliateParams: object,
   email?: string,
   name?: string,
 ): ResumeTokenPayload {
