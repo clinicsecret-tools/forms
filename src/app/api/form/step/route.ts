@@ -84,8 +84,3 @@ function fireCRM(session: Awaited<ReturnType<typeof getSession>>, step: number, 
     })
   ).catch(e => console.error('[crm]', e))
 }
-
-// Need Step13Data type
-type Step13Data = { phoneNumber: string; smsConsent: boolean }
-type Step9Data  = { firstName: string; lastName: string; email: string }
-type Step3Data  = { gender: 'male' | 'female' }
