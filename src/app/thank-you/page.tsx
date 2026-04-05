@@ -1,8 +1,8 @@
 'use client'
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 
-export default function ThankYouPage() {
+function ThankYouContent() {
   const searchParams = useSearchParams()
   const paymentIntent = searchParams.get('payment_intent')
 
@@ -11,9 +11,9 @@ export default function ThankYouPage() {
       <div style={S.card}>
         <div style={S.iconWrap}>
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="24" fill="#11EBF2" opacity="0.15"/>
-            <circle cx="24" cy="24" r="18" fill="#11EBF2"/>
-            <polyline points="14,24 21,31 34,18" stroke="#1a1a1a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            <circle cx="24" cy="24" r="24" fill="#11EBF2" opacity="0.15" />
+            <circle cx="24" cy="24" r="18" fill="#11EBF2" />
+            <polyline points="14,24 21,31 34,18" stroke="#1a1a1a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
         </div>
         <h1 style={S.title}>Order confirmed!</h1>
@@ -45,6 +45,14 @@ export default function ThankYouPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ThankYouPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 24, textAlign: 'center' }}>Loading confirmation…</div>}>
+      <ThankYouContent />
+    </Suspense>
   )
 }
 

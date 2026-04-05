@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
@@ -8,7 +8,6 @@ import type { Product } from '@/types'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-// ─── Inner checkout form (must be inside Elements) ────────────────────────────
 function CheckoutForm({ product, amount }: { product: Product; amount: number }) {
   const stripe = useStripe()
   const elements = useElements()
@@ -48,9 +47,7 @@ function CheckoutForm({ product, amount }: { product: Product; amount: number })
         <PaymentElement options={{ layout: 'tabs' }} />
       </div>
 
-      {errorMsg && (
-        <div style={S.errorBanner}>{errorMsg}</div>
-      )}
+      {errorMsg && <div style={S.errorBanner}>{errorMsg}</div>}
 
       <button type="submit" disabled={!stripe || isSubmitting} style={{ ...S.cta, ...(!stripe || isSubmitting ? S.ctaDisabled : {}) }}>
         {isSubmitting ? 'Processing…' : `Pay ${formatAmount(amount)}`}
@@ -61,8 +58,7 @@ function CheckoutForm({ product, amount }: { product: Product; amount: number })
   )
 }
 
-// ─── Page wrapper: fetches PaymentIntent, then mounts Elements ────────────────
-export default function PaymentPage() {
+function PaymentPageContent() {
   const searchParams = useSearchParams()
   const productId = searchParams.get('productId') ?? ''
   const paymentType = (searchParams.get('paymentType') ?? 'one_time') as 'one_time' | 'subscription'
@@ -75,7 +71,11 @@ export default function PaymentPage() {
   const product = PRODUCTS.find(p => p.id === productId)
 
   useEffect(() => {
-    if (!productId) return
+    if (!productId) {
+      setIsLoading(false)
+      setError('Missing product information. Please return and try again.')
+      return
+    }
 
     fetch('/api/payment/create-intent', {
       method: 'POST',
@@ -84,7 +84,10 @@ export default function PaymentPage() {
     })
       .then(r => r.json())
       .then(data => {
-        if (data.error) { setError(data.error); return }
+        if (data.error) {
+          setError(data.error)
+          return
+        }
         setClientSecret(data.clientSecret)
         setAmount(data.amount)
       })
@@ -122,9 +125,7 @@ export default function PaymentPage() {
           </div>
         )}
 
-        {error && (
-          <div style={S.errorBanner}>{error}</div>
-        )}
+        {error && <div style={S.errorBanner}>{error}</div>}
 
         {!isLoading && !error && clientSecret && product && (
           <div style={S.card}>
@@ -135,6 +136,14 @@ export default function PaymentPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function PaymentPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 24, textAlign: 'center' }}>Loading checkout…</div>}>
+      <PaymentPageContent />
+    </Suspense>
   )
 }
 
