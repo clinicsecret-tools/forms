@@ -1,37 +1,25 @@
 import type { Product } from '@/types'
 
-// ─── Replace these with your actual Stripe Price IDs and product details ──────
-// You can also load these from env vars or a database
-
 export const PRODUCTS: Product[] = [
   {
-    id: 'pain-relief-1mo',
-    name: '1-Month Supply',
-    description: 'Prescription pain relief — 30-day supply',
-    stripePriceId: process.env.STRIPE_PRICE_1MO ?? 'price_REPLACE_ME',
-    stripeRecurringPriceId: process.env.STRIPE_PRICE_1MO_SUB,
-    amount: 9900,        // $99.00 in cents
+    id: 'pentadeca-arginate-1mo',
+    name: 'PentaDeca Arginate — 1 Month',
+    description: '$297/month recurring subscription',
+    stripePriceId: process.env.STRIPE_PRICE_PENTA_1MO ?? 'price_REPLACE_ME',
+    stripeRecurringPriceId: process.env.STRIPE_PRICE_PENTA_1MO_SUB,
+    amount: 29700,
     currency: 'usd',
-    badge: undefined,
-  },
-  {
-    id: 'pain-relief-3mo',
-    name: '3-Month Supply',
-    description: 'Prescription pain relief — 90-day supply, best value',
-    stripePriceId: process.env.STRIPE_PRICE_3MO ?? 'price_REPLACE_ME',
-    stripeRecurringPriceId: process.env.STRIPE_PRICE_3MO_SUB,
-    amount: 24900,       // $249.00 in cents
-    currency: 'usd',
+    interval: 'month',
     popular: true,
     badge: 'Most Popular',
   },
   {
-    id: 'pain-relief-6mo',
-    name: '6-Month Supply',
-    description: 'Prescription pain relief — 180-day supply, maximum savings',
-    stripePriceId: process.env.STRIPE_PRICE_6MO ?? 'price_REPLACE_ME',
-    stripeRecurringPriceId: process.env.STRIPE_PRICE_6MO_SUB,
-    amount: 44900,       // $449.00 in cents
+    id: 'pentadeca-arginate-3mo',
+    name: 'PentaDeca Arginate — 3 Months',
+    description: '$697 every 3 months',
+    stripePriceId: process.env.STRIPE_PRICE_PENTA_3MO ?? 'price_REPLACE_ME',
+    stripeRecurringPriceId: process.env.STRIPE_PRICE_PENTA_3MO_SUB,
+    amount: 69700,
     currency: 'usd',
     badge: 'Best Value',
   },
