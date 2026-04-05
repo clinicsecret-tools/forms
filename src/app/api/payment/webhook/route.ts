@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { firePostback } from '@/lib/affiliate'
 import { writeToCRMs } from '@/lib/crm'
+import { prisma } from '@/lib/db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
@@ -87,4 +88,12 @@ async function handlePaymentSuccess(pi: Stripe.PaymentIntent) {
     },
     timestamp: new Date().toISOString(),
   })
+
+  // 3. Mark coupon redemption if coupon was used
+  if (meta.coupon) {
+    await prisma.coupon.updateMany({
+      where: { code: meta.coupon.toUpperCase() },
+      data: { redeemedCount: { increment: 1 } },
+    })
+  }
 }

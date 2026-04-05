@@ -215,8 +215,11 @@ export interface CreatePaymentIntentRequest {
 export interface CreatePaymentIntentResponse {
   clientSecret: string
   amount: number
+  originalAmount: number
   currency: string
   paymentIntentId: string
+  couponCode?: string
+  couponAmountOff?: number
 }
 
 // ─── CRM ─────────────────────────────────────────────────────────────────────

@@ -100,3 +100,15 @@ model ResumeToken {
   @@index([patientEmail])
   @@index([expiresAt])     // for cleanup jobs
 }
+
+model Coupon {
+  id             String   @id @default(uuid())
+  code           String   @unique
+  amountOff      Int
+  isActive       Boolean  @default(true)
+  maxRedemptions Int?
+  redeemedCount  Int      @default(0)
+  expiresAt      DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

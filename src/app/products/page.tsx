@@ -82,7 +82,7 @@ function ProductsContent() {
                 {opt.label}
                 {opt.value === 'subscription' && (
                   <span className="ml-1.5 text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">
-                    Save 20%
+                    Recurring
                   </span>
                 )}
               </button>
@@ -183,7 +183,7 @@ function ProductCard({
 function getDisplayAmount(product: Product | undefined, paymentType: PaymentType): number {
   if (!product) return 0
   if (paymentType === 'subscription' && product.stripeRecurringPriceId) {
-    return Math.round(product.amount * 0.8)
+    return product.amount
   }
   return product.amount
 }
