@@ -62,6 +62,19 @@ stripe listen --forward-to localhost:3000/api/payment/webhook
 npm run dev
 ```
 
+## Production deployment size optimization
+
+This project is configured with Next.js `output: "standalone"` in `next.config.js`.
+After `npm run build`, deploy the minimal standalone output instead of the full repository:
+
+```bash
+.next/standalone
+.next/static
+public
+```
+
+This avoids shipping the entire `node_modules` tree and typically produces a much smaller deployable artifact.
+
 ## Key files
 
 ```
