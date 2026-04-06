@@ -22,27 +22,31 @@ export async function validateCoupon(rawCode?: string | null): Promise<CouponRes
     }
   }
 
-  const dbCoupon = await prisma.coupon.findUnique({ where: { code: normalized } })
+  try {
+    const dbCoupon = await prisma.coupon.findUnique({ where: { code: normalized } })
 
-  if (dbCoupon) {
-    const exhausted = dbCoupon.maxRedemptions !== null && dbCoupon.redeemedCount >= dbCoupon.maxRedemptions
-    const expired = dbCoupon.expiresAt !== null && dbCoupon.expiresAt.getTime() < Date.now()
+    if (dbCoupon) {
+      const exhausted = dbCoupon.maxRedemptions !== null && dbCoupon.redeemedCount >= dbCoupon.maxRedemptions
+      const expired = dbCoupon.expiresAt !== null && dbCoupon.expiresAt.getTime() < Date.now()
 
-    if (!dbCoupon.isActive || exhausted || expired) {
+      if (!dbCoupon.isActive || exhausted || expired) {
+        return {
+          valid: false,
+          code: normalized,
+          amountOff: 0,
+          message: 'Coupon is invalid or expired.',
+        }
+      }
+
       return {
-        valid: false,
+        valid: true,
         code: normalized,
-        amountOff: 0,
-        message: 'Coupon is invalid or expired.',
+        amountOff: dbCoupon.amountOff,
+        message: `Coupon applied: -$${(dbCoupon.amountOff / 100).toFixed(2)}`,
       }
     }
-
-    return {
-      valid: true,
-      code: normalized,
-      amountOff: dbCoupon.amountOff,
-      message: `Coupon applied: -$${(dbCoupon.amountOff / 100).toFixed(2)}`,
-    }
+  } catch (error) {
+    console.error('[coupons] DB lookup failed, falling back to env/default coupon only', error)
   }
 
   // Backward-compatible fallback so coupon works even before DB seed.
